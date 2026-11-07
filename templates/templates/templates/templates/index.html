@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="TrustVault - manage and share documents with access permissions.">
+    <title>TrustVault | Secure Document Sharing</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <main class="container">
+        <h1>TrustVault</h1>
+        <h2>Secure document sharing</h2>
+        <p>Upload your documents, manage access, and share files with the people you choose.</p>
+        <a class="button" href="{{ url_for('login') }}">Login</a>
+        <a class="button" href="{{ url_for('register') }}">Create an account</a>
+        <p class="small">Your documents are available only to you and users you authorize.</p>
+    </main>
+</body>
+</html>
