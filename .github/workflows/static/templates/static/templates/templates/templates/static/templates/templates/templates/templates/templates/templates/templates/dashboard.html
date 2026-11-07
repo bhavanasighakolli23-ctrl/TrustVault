@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard - TrustVault</title>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>TrustVault Dashboard</h1>
+        <p>Welcome, {{ session.username }}!</p>
+
+        <nav>
+            <a href="{{ url_for('audit') }}">Audit Logs</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </nav>
+
+        {% with messages = get_flashed_messages() %}
+            {% for message in messages %}
+                <p class="message">{{ message }}</p>
+            {% endfor %}
+        {% endwith %}
+
+        <h2>Upload Document</h2>
+        <form action="{{ url_for('upload') }}" method="POST"
+              enctype="multipart/form-data">
+            <input type="file" name="file" required>
+            <button type="submit">Upload</button>
+        </form>
+
+        <h2>Your Documents and Shared Documents</h2>
+
+        {% for document in documents %}
+            <div class="document">
+                <strong>{{ document.original_name }}</strong>
+                <p>Uploaded: {{ document.created_at }}</p>
+
+                <a href="{{ url_for('download', document_id=document.id) }}">
+                    Download
+                </a>
+
+                {% if document.owner_id == session.user_id %}
+                    <form action="{{ url_for('share', document_id=document.id) }}"
+                          method="POST">
+                        <label>Share with</label>
+                        <select name="user_id" required>
+                            {% for user in users %}
+                                <option value="{{ user.id }}">
+                                    {{ user.username }}
+                                </option>
+                            {% endfor %}
+                        </select>
+
+                        <select name="permission">
+                            <option value="read">Read</option>
+                            <option value="edit">Edit</option>
+                        </select>
+
+                        <button type="submit">Share</button>
+                    </form>
+                {% endif %}
+            </div>
+        {% else %}
+            <p>No documents uploaded yet.</p>
+        {% endfor %}
+    </div>
+</body>
+</html>
