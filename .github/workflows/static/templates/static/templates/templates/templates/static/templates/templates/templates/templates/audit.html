@@ -1,0 +1,36 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Audit Logs - TrustVault</title>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Audit Logs</h1>
+        <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+
+        <table>
+            <tr>
+                <th>User</th>
+                <th>Action</th>
+                <th>Document ID</th>
+                <th>Details</th>
+                <th>Date</th>
+            </tr>
+
+            {% for log in logs %}
+                <tr>
+                    <td>{{ log.username or "Unknown" }}</td>
+                    <td>{{ log.action }}</td>
+                    <td>{{ log.document_id or "-" }}</td>
+                    <td>{{ log.details or "-" }}</td>
+                    <td>{{ log.created_at }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>
