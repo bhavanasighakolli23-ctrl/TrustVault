@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard | TrustVault</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="app-header"><a class="brand" href="{{ url_for('dashboard') }}">TrustVault</a><nav><a href="{{ url_for('audit') }}">Activity log</a><form method="post" action="{{ url_for('logout') }}"><button class="text-button" type="submit">Sign out</button></form></nav></header>
+  <main class="page">
+    <section class="welcome"><div><p class="eyebrow">YOUR PRIVATE WORKSPACE</p><h1>Welcome, {{ session.get('username', 'user') }}</h1><p class="muted">Manage your documents and control who can access them.</p></div></section>
+    {% with messages = get_flashed_messages() %}{% if messages %}<div class="flash">{% for message in messages %}<p>{{ message }}</p>{% endfor %}</div>{% endif %}{% endwith %}
+    <section class="panel upload-panel"><div><h2>Upload a document</h2><p class="muted">PDF, TXT, DOC, DOCX, PNG or JPG · Maximum 10 MB</p></div><form class="upload-form" method="post" action="{{ url_for('upload') }}" enctype="multipart/form-data"><input type="file" name="file" accept=".pdf,.txt,.doc,.docx,.png,.jpg,.jpeg" required><button class="button primary" type="submit">Upload file</button></form></section>
+    <section class="section-heading"><div><p class="eyebrow">DOCUMENT LIBRARY</p><h2>Your documents</h2></div><span class="count">{{ documents|length }} file(s)</span></section>
+    {% if documents %}
+      <div class="document-list">{% for doc in documents %}
+        <article class="document-card"><div class="file-icon">DOC</div><div class="document-info"><h3>{{ doc.original_name }}</h3><p class="muted">{% if doc.owner_id == session.get('user_id') %}Owned by you{% else %}Shared by {{ doc.owner_name }}{% endif %} · {{ doc.created_at }}</p></div><a class="button secondary small-button" href="{{ url_for('download', document_id=doc.id) }}">Download</a>
+        {% if doc.owner_id == session.get('user_id') %}
+          <details class="share-details"><summary>Manage access</summary><form method="post" action="{{ url_for('share', document_id=doc.id) }}"><label>Share with<select name="user_id" required>{% for user in users %}<option value="{{ user.id }}">{{ user.username }}</option>{% endfor %}</select></label><label>Permission<select name="permission"><option value="read">Read only</option><option value="edit">Edit</option></select></label><button class="button primary small-button" type="submit">Save access</button></form>
+          {% if users %}<div class="revoke-list"><p class="muted">To remove a user's access, select their username below:</p>{% for user in users %}<form method="post" action="{{ url_for('revoke', document_id=doc.id, target_id=user.id) }}"><span>{{ user.username }}</span><button class="text-button danger" type="submit">Revoke</button></form>{% endfor %}</div>{% endif %}</details>
+        {% endif %}</article>
+      {% endfor %}</div>
+    {% else %}<div class="empty-state"><div class="empty-icon">↥</div><h3>No documents yet</h3><p class="muted">Upload your first file to start using TrustVault.</p></div>{% endif %}
+  </main>
+  <footer class="site-footer">TrustVault · Your documents, your control</footer>
+</body>
+</html>
