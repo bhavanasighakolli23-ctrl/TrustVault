@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ 'Create account' if mode == 'register' else 'Sign in' }} | TrustVault</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="auth-page">
+  <main class="auth-card">
+    <a class="brand" href="{{ url_for('index') }}">TrustVault</a>
+    <p class="eyebrow">{{ 'GET STARTED' if mode == 'register' else 'WELCOME BACK' }}</p>
+    <h1>{{ 'Create your account' if mode == 'register' else 'Sign in to TrustVault' }}</h1>
+    <p class="muted">{{ 'Create a secure space for your documents.' if mode == 'register' else 'Access your documents and shared files.' }}</p>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}<div class="flash">{% for message in messages %}<p>{{ message }}</p>{% endfor %}</div>{% endif %}
+    {% endwith %}
+    <form method="post">
+      <label for="username">Username</label>
+      <input id="username" name="username" autocomplete="username" minlength="3" maxlength="40" required>
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" autocomplete="{{ 'new-password' if mode == 'register' else 'current-password' }}" minlength="{{ 8 if mode == 'register' else 1 }}" required>
+      <button class="button primary full" type="submit">{{ 'Create account' if mode == 'register' else 'Sign in' }}</button>
+    </form>
+    {% if mode == 'register' %}<p class="switch">Already have an account? <a href="{{ url_for('login') }}">Sign in</a></p>
+    {% else %}<p class="switch">New to TrustVault? <a href="{{ url_for('register') }}">Create an account</a></p>{% endif %}
+    <a class="back-link" href="{{ url_for('index') }}">← Back to home</a>
+  </main>
+</body>
+</html>
