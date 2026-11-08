@@ -14,7 +14,7 @@ from werkzeug.utils import secure_filename
 from database import close_db, get_db, init_db
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
-UPLOAD_FOLDER = os.path.join(BASE_DIR, "uploads")
+UPLOAD_FOLDER = os.environ.get("UPLOAD_FOLDER", os.path.join(BASE_DIR, "uploads"))
 ALLOWED_EXTENSIONS = {"pdf", "txt", "doc", "docx", "png", "jpg", "jpeg"}
 MAX_UPLOAD_BYTES = 10 * 1024 * 1024
 
