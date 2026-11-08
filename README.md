@@ -2,6 +2,11 @@
 
 TrustVault is a Flask-based secure document storage and sharing application. Users can create an account, upload supported documents, share files with read or edit permissions, revoke access, and review their account activity history.
 
+## Project links
+
+- **GitHub repository:** [TrustVault source code](https://github.com/bhavanasighakolli23-ctrl/TrustVault)
+- **Live demo:** [https://trustvault-2-yj7g.onrender.com/](https://trustvault-2-yj7g.onrender.com/)
+
 ## Features
 - User registration and secure password hashing
 - Login and logout with session protection
