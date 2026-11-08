@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="TrustVault — secure document storage and sharing with access controls.">
+  <title>TrustVault | Secure document sharing</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main class="hero">
+    <nav class="topbar"><a class="brand" href="{{ url_for('index') }}">TrustVault</a><a href="{{ url_for('login') }}">Sign in</a></nav>
+    <section class="hero-content">
+      <span class="eyebrow">PRIVATE. CONTROLLED. AUDITABLE.</span>
+      <h1>Your documents.<br><span>Your control.</span></h1>
+      <p>Store important files, share them with selected people, and manage access from one simple dashboard.</p>
+      <div class="actions"><a class="button primary" href="{{ url_for('register') }}">Create free account</a><a class="button secondary" href="{{ url_for('login') }}">Sign in</a></div>
+      <div class="feature-row"><div><strong>01</strong><span>Private file storage</span></div><div><strong>02</strong><span>Read and edit permissions</span></div><div><strong>03</strong><span>Activity history</span></div></div>
+    </section>
+    <footer>TrustVault · Secure document sharing</footer>
+  </main>
+</body>
+</html>
