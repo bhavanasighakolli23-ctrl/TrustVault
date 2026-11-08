@@ -1,0 +1,8 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Activity log | TrustVault</title><link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"></head>
+<body>
+<header class="app-header"><a class="brand" href="{{ url_for('dashboard') }}">TrustVault</a><nav><a href="{{ url_for('dashboard') }}">Dashboard</a><form method="post" action="{{ url_for('logout') }}"><button class="text-button" type="submit">Sign out</button></form></nav></header>
+<main class="page"><p class="eyebrow">SECURITY & TRANSPARENCY</p><h1>Activity history</h1><p class="muted">Recent activity for your account.</p>
+{% if logs %}<div class="panel table-wrap"><table><thead><tr><th>Action</th><th>Details</th><th>Document</th><th>Time</th></tr></thead><tbody>{% for item in logs %}<tr><td><span class="activity-tag">{{ item.action }}</span></td><td>{{ item.details or '—' }}</td><td>{{ item.document_id or '—' }}</td><td>{{ item.created_at }}</td></tr>{% endfor %}</tbody></table></div>{% else %}<div class="empty-state"><h3>No activity yet</h3><p class="muted">Your document activity will appear here.</p></div>{% endif %}
+</main></body></html>
